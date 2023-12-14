@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RGB Light Control</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/leds.css') }}">
+</head>
+<body>
+  <h1>RGB Light Control</h1>
+
+  <div id="datetime">{{ current_datetime }}</div>
+
+  <button onclick="add_alarm()">Add Alarm</button>
+
+  <div id="color-circle"></div>
+
+  <div id="color-values">
+    <label for="red-value">Red:</label>
+    <span id="red-display">0</span>
+    <input type="range" id="red-value" min="0" max="255" value="0" oninput="updateColor()">
+
+    <label for="green-value">Green:</label>
+    <span id="green-display">0</span>
+    <input type="range" id="green-value" min="0" max="255" value="0" oninput="updateColor()">
+
+    <label for="blue-value">Blue:</label>
+    <span id="blue-display">0</span>
+    <input type="range" id="blue-value" min="0" max="255" value="0" oninput="updateColor()">
+  </div>
+
+  <button onclick="sendColor()">Apply Color</button>
+
+  <p id="status-message"></p>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

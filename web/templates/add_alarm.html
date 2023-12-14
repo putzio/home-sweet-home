@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Alarm</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/leds.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/add_alarm.css') }}">
+</head>
+<body>
+  <h1>Add Alarm</h1>
+
+  <div id="datetime">{{ current_datetime }}</div>
+
+  <button onclick="add_alarm()">Add Alarm</button>
+  <input type="datetime" id="new_alarm_time" placeholder="Alarm Time">
+  <input type="text" id="new_alarm_describtion" placeholder="Alarm Time">
+  <table>
+    <thead>
+        <tr>
+            <th>Alarm ID</th>
+            <th>Alarm Time</th>
+            <th>Alarm Describtion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for alarm in alarms %}
+            <tr>
+                <td>{{ alarm.id }}</td>
+                <td>{{ alarm.time }}</td>
+                <td>{{ alarm.description }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('index') }}"><button>Back to Home</button></a>
+
+  <p id="status-message"></p>
+  <script src="{{ url_for('static', filename='js/alarm.js') }}"></script>
+</body>
+</html>
