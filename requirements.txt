@@ -2,3 +2,4 @@ flask
 ngrok
 datetime
 mysql-connector-python
+pre-commit
