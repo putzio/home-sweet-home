@@ -14,12 +14,12 @@ On linux simply run the startup.sh script. it will set up virtual enviroment (re
 
 ### On linux (apt based e.g. mint)
 
-Follow this tutorial: `https://linuxhint.com/install-mysql-linux-mint-ubuntu/`
+Follow this tutorial: https://linuxhint.com/install-mysql-linux-mint-ubuntu/
 
 ## Using precommit
 
 ### Instalation
-If you haven`t runned the `startup.sh`:
+If you haven't runned the `startup.sh`:
 0. Install python3
 1. Install precommit using `pip install pre-commit`
 2. Instal git hook scripts: `pre-commit install`
@@ -29,7 +29,7 @@ In our case it will simply check if the change files are properly formatted (usi
 
 You can also always check all of the project files by running `pre-commit run --all-files`.
 
-For more info check out `https://pre-commit.com/``
+For more info check out https://pre-commit.com/
 
 
 ### Flake8 config
