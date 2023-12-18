@@ -1,10 +1,18 @@
 import mysql.connector
-
-DATABASE_NAME = "homeDB"
+from dataclasses import dataclass, field
+from typing import Dict, List
+from table import Table
+import constants as C
 
 
 class Databse:
-    def init(self, host: str = "localhost", user: str = "user", password: str = "password", db_name: str = "homeDB"):
+    def init(
+        self,
+        host: str = C.DATABASE_HOST,
+        user: str = C.DATABASE_USER,
+        password: str = C.DATABASE_PASSWORD,
+        db_name: str = C.DATABASE_NAME,
+    ):
         """
         Initialize the database connection
         """
@@ -22,18 +30,17 @@ class Databse:
             if any(self.db_name in db for db in dbs):
                 print("Database already exists")
             else:
-                self.__cur.execute(f"create database {DATABASE_NAME}")
+                self.__cur.execute(f"create database {self.db_name}")
                 print("Database created successfully")
         except Exception as e:
             print(e)
 
-    def create_table(self, table_name: str, columns: str) -> bool:
+    def create_table(self, table: Table) -> bool:
         """
         Create a new table in the database.
 
         Args:
-            table_name (str): The name of the table to be created
-            columns (str): The columns of the table to be created
+            table (Table): The table object to create
 
         Returns:
             bool: True if the table was created successfully, False otherwise
@@ -41,24 +48,31 @@ class Databse:
         try:
             self.__cur.execute("show tables")
             tables = self.__cur.fetchall()
-            if any(table_name in table for table in tables):
+            if any(table.name in t for t in tables):
                 print("Table already exists")
 
             else:
-                self.__cur.execute(f"create table {table_name} ({columns})")
+                self.__cur.execute(f"create table {table.name} ({table.columns})")
                 print("Table created successfully")
         except Exception as e:
             print(e)
 
-    def insert(self, table_name, columns, values):
-        sql = f"INSERT INTO {table_name} ({columns}) VALUES ({values})"
-        try:
-            self.__cur.execute(sql)
-            self.__myconn.commit()
-            print("Record inserted successfully")
-        except Exception as e:
-            print(e)
-            # self.__myconn.rollback()
+    def insert(self, table: Table):
+        """
+        Insert new records into the database
+
+        Args:
+            table (Table): The table with objects to insert
+        """
+        for values in table.get_values_to_insert():
+            sql = f"INSERT INTO {table.name} ({table.get_column_names_to_insert()}) VALUES ({values})"
+            print(sql)
+            try:
+                self.__cur.execute(sql)
+                self.__myconn.commit()
+                print("Record inserted successfully")
+            except Exception as e:
+                print(e)
 
     def delete(self, table_name, condition):
         sql = f"DELETE FROM {table_name} WHERE {condition}"
@@ -78,16 +92,3 @@ class Databse:
     def __del__(self):
         self.__myconn.close()
         print("Database connection closed")
-
-
-if __name__ == "__main__":
-    db = Databse()
-    db.init()
-    db.create_table("alarms", "id INT AUTO_INCREMENT PRIMARY KEY, time VARCHAR(255), description VARCHAR(255)")
-    db.print_table("alarms")
-    db.insert("alarms", "time, description", "'2021-01-01 12:00:00', 'Wake up'")
-    db.insert("alarms", "time, description", "'2021-01-01 12:00:00', 'Wake up'")
-    db.print_table("alarms")
-    db.delete("alarms", "id>1")
-    db.print_table("alarms")
-    del db
