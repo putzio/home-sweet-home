@@ -1,6 +1,6 @@
-function add_alarm() {
+function alarms() {
         // Redirect to a new page
-        window.location.href = '/add_alarm'; // Replace '/new_page' with the actual URL
+        window.location.href = '/alarm_page'; // Replace '/new_page' with the actual URL
 }
 
 

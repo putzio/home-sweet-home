@@ -16,7 +16,7 @@ class AlarmTable(Table):
 
 
 if __name__ == "__main__":
-    from database import Databse
+    from database import Database
 
     alarm_table = AlarmTable()
     alarm_table.add_alarm("2021-01-01 12:00:00", "Wake up")
@@ -24,12 +24,13 @@ if __name__ == "__main__":
     print(alarm_table.get_all_columns())
     print(alarm_table.get_values_to_insert())
 
-    db = Databse()
+    db = Database()
     db.init()
     db.create_table(alarm_table)
     db.print_table(alarm_table.name)
     db.insert(alarm_table)
-    db.print_table(alarm_table.name)
+    recieved = db.get_table_in_rows(alarm_table)
+    print(f"Recieved: {recieved}")
     db.delete(alarm_table.name, "id>1")
     db.print_table(alarm_table.name)
     del db

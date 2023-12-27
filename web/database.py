@@ -1,11 +1,11 @@
 import mysql.connector
 from dataclasses import dataclass, field
 from typing import Dict, List
-from table import Table
 import constants as C
+from table import Table
 
 
-class Databse:
+class Database:
     def init(
         self,
         host: str = C.DATABASE_HOST,
@@ -88,6 +88,17 @@ class Databse:
         self.__cur.execute(f"SELECT * FROM {table_name}")
         for x in self.__cur:
             print(x)
+
+    def get_table_in_rows(self, table: Table) -> dict[str : list[str]]:
+        self.__cur.execute(f"SELECT * FROM {table.name}")
+        keys = list(table.columns.keys())
+        result = []
+        for x in self.__cur:
+            print(x)
+            # for i in range(len(x)):
+            #     result[keys[i]].append(x[i])
+            result.append({keys[i]: x[i] for i in range(len(x))})
+        return result
 
     def __del__(self):
         self.__myconn.close()

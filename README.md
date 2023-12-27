@@ -6,6 +6,8 @@ You need to install:
 - python3
 - mysql
 
+ProjectTree.loadIgnore
+
 ## Prepare enviroment 
 
 On linux simply run the startup.sh script. it will set up virtual enviroment (reccomended) and download all of the necessary packages. 
