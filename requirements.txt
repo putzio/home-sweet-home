@@ -3,3 +3,4 @@ ngrok
 datetime
 mysql-connector-python
 pre-commit
+paho-mqtt
